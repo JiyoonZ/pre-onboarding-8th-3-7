@@ -1,10 +1,41 @@
+import React from 'react';
 import styles from './SearchResult.module.css';
+import NoSearchKeyword from './NoSearchKeyword';
+import SearchKeyword from './SearchKeyword';
 
-function SearchResult() {
-  //TODO: 검색 결과 기능 구현
+export type dataType = {
+  sickCd: string;
+  sickNm: string;
+};
+
+type SearchResultProps = {
+  keyword: string;
+  data: dataType[];
+  ulRef: React.RefObject<HTMLUListElement>;
+  currentIndex: number;
+  isLoading: boolean;
+};
+
+function SearchResult({
+  keyword,
+  data,
+  ulRef,
+  currentIndex,
+  isLoading,
+}: SearchResultProps) {
   return (
     <div className={styles.container}>
-      <span>추천 검색어</span>
+      {keyword.length ? (
+        <SearchKeyword
+          data={data}
+          ulRef={ulRef}
+          currentIndex={currentIndex}
+          keyword={keyword}
+          isLoading={isLoading}
+        />
+      ) : (
+        <NoSearchKeyword />
+      )}
     </div>
   );
 }
